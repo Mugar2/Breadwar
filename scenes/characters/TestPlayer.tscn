@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c0bi7age8bda2"]
+
+[ext_resource type="Script" uid="uid://bdhgbvp5g0n48" path="res://scenes/characters/TestPlayer.gd" id="1_vsjxn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6eumy"]
+size = Vector2(40, 60)
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1290224343]
+script = ExtResource("1_vsjxn")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1074862229]
+offset_right = 40.0
+offset_bottom = 60.0
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1528017982]
+position = Vector2(19, 30)
+shape = SubResource("RectangleShape2D_6eumy")
