@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c0bi7age8bda2"]
 
 [ext_resource type="Script" uid="uid://bdhgbvp5g0n48" path="res://scenes/characters/TestPlayer.gd" id="1_vsjxn"]
+[ext_resource type="Texture2D" uid="uid://chrrpukqdty62" path="res://icon.svg" id="2_gm6r3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6eumy"]
 size = Vector2(40, 60)
@@ -16,3 +17,6 @@ metadata/_edit_use_anchors_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1528017982]
 position = Vector2(19, 30)
 shape = SubResource("RectangleShape2D_6eumy")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1533140386]
+texture = ExtResource("2_gm6r3")
