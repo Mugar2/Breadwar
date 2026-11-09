@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://bomfebb4lq3vw"]
+
+[ext_resource type="Script" uid="uid://8qvje0j11at6" path="res://scenes/characters/pan_gordo.gd" id="1_8k84t"]
+[ext_resource type="Texture2D" uid="uid://can2luf3ru0vd" path="res://assets/characters/Pan_pueblo/idle_pueblo.png" id="2_52f36"]
+[ext_resource type="Texture2D" uid="uid://bf23smtsrvm0h" path="res://assets/characters/Pan_pueblo/blink_pueblo.png" id="3_tc5oc"]
+[ext_resource type="Texture2D" uid="uid://bt27qt06i8nfx" path="res://assets/characters/Pan_pueblo/walk_pueblo1.png" id="4_og7aj"]
+[ext_resource type="Texture2D" uid="uid://0s56l6rht7ja" path="res://assets/characters/Pan_pueblo/walk_pueblo2.png" id="5_yn6ln"]
+[ext_resource type="Texture2D" uid="uid://hrl6g7m85tcn" path="res://assets/characters/Pan_pueblo/walk_pueblo3.png" id="6_1lc0e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6eumy"]
+size = Vector2(180, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_52f36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_52f36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_52f36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_52f36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_52f36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_tc5oc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_52f36")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_og7aj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yn6ln")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_og7aj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_1lc0e")
+}],
+"loop": 1,
+"name": &"Run",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_og7aj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yn6ln")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_og7aj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_1lc0e")
+}],
+"loop": 1,
+"name": &"Walk",
+"speed": 10.0
+}]
+
+[node name="Pan_gordo" type="CharacterBody2D" unique_id=1290224343]
+script = ExtResource("1_8k84t")
+jump_velocity = -2500.0
+gravity_multiplier = 5.0
+character_inertia = 30.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1528017982]
+position = Vector2(370, 205)
+shape = SubResource("RectangleShape2D_6eumy")
+
+[node name="Sprites" type="AnimatedSprite2D" parent="." unique_id=59169380]
+position = Vector2(368, 198)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+animation = &"Walk"

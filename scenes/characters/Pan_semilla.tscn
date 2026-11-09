@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://brhun226vwio6"]
+
+[ext_resource type="Script" uid="uid://h1ho7edux0ll" path="res://scenes/characters/pan_semilla.gd" id="1_rx4k3"]
+[ext_resource type="Texture2D" uid="uid://c7kawmej5xaef" path="res://assets/characters/Pan_semilla/jump_falling_semillas.png" id="2_b2jg0"]
+[ext_resource type="Texture2D" uid="uid://ch5he28vpmian" path="res://assets/characters/Pan_semilla/blink_semillas.png" id="3_75vbr"]
+[ext_resource type="Texture2D" uid="uid://b1i25lebadfrq" path="res://assets/characters/Pan_semilla/walk_semillas1.png" id="3_rx4k3"]
+[ext_resource type="Texture2D" uid="uid://drvnmx72ouaxa" path="res://assets/characters/Pan_semilla/walk_semillas2.png" id="4_75vbr"]
+[ext_resource type="Texture2D" uid="uid://o1efxebt1cnm" path="res://assets/characters/Pan_semilla/walk_semillas3.png" id="5_b2jg0"]
+[ext_resource type="Texture2D" uid="uid://duu2bw1ukiug2" path="res://assets/characters/Pan_semilla/jump_up_semillas.png" id="5_u17vg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6eumy"]
+size = Vector2(191, 126)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_b2jg0")
+}],
+"loop": 1,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_75vbr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_u17vg")
+}],
+"loop": 1,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_75vbr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_b2jg0")
+}],
+"loop": 1,
+"name": &"Run",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_75vbr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rx4k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_b2jg0")
+}],
+"loop": 1,
+"name": &"Walk",
+"speed": 10.0
+}]
+
+[node name="Pan_semilla" type="CharacterBody2D" unique_id=1290224343]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_rx4k3")
+speed = 500.0
+jump_velocity = -800.0
+gravity_multiplier = 1.4
+jump_counter_default = 1
+character_inertia = 25.0
+character_change_jump_direction_inertia = 60.0
+dash_speed = 800.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1528017982]
+position = Vector2(364.5, 230)
+shape = SubResource("RectangleShape2D_6eumy")
+
+[node name="Sprites" type="AnimatedSprite2D" parent="." unique_id=59169380]
+position = Vector2(368, 198)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+animation = &"Fall"

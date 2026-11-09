@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://c0bi7age8bda2"]
+
+[ext_resource type="Script" uid="uid://bdhgbvp5g0n48" path="res://scenes/characters/Barra_pan.gd" id="1_vsjxn"]
+[ext_resource type="Texture2D" uid="uid://dh7v7ygd2r0b6" path="res://assets/characters/Barra_pan/jump_falling_barra.png" id="2_4c4w2"]
+[ext_resource type="Texture2D" uid="uid://c3af68rsdg11e" path="res://assets/characters/Barra_pan/barra1.png" id="2_c4uwc"]
+[ext_resource type="Texture2D" uid="uid://cma31kby2ax4u" path="res://assets/characters/Barra_pan/barra1_blink.png" id="3_7ggtu"]
+[ext_resource type="Texture2D" uid="uid://beher4t270r43" path="res://assets/characters/Barra_pan/walk_barra1.png" id="4_mbkw6"]
+[ext_resource type="Texture2D" uid="uid://d1gt87b3lusl3" path="res://assets/characters/Barra_pan/walk_barra2.png" id="5_ijxgt"]
+[ext_resource type="Texture2D" uid="uid://co6uvdpjapoyv" path="res://assets/characters/Barra_pan/jump_up_barra.png" id="5_x1wm8"]
+[ext_resource type="Texture2D" uid="uid://dugscn2lnexn8" path="res://assets/characters/Barra_pan/walk_barra3.png" id="6_4c4w2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6eumy"]
+size = Vector2(100, 191)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4c4w2")
+}],
+"loop": 1,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_c4uwc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_c4uwc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_c4uwc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_c4uwc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_c4uwc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7ggtu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_c4uwc")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_x1wm8")
+}],
+"loop": 1,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_mbkw6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ijxgt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mbkw6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4c4w2")
+}],
+"loop": 1,
+"name": &"Run",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_mbkw6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ijxgt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mbkw6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4c4w2")
+}],
+"loop": 1,
+"name": &"Walk",
+"speed": 10.0
+}]
+
+[node name="Barra_pan" type="CharacterBody2D" unique_id=1290224343]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_vsjxn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1528017982]
+position = Vector2(159, 149.5)
+shape = SubResource("RectangleShape2D_6eumy")
+
+[node name="Sprites" type="AnimatedSprite2D" parent="." unique_id=59169380]
+position = Vector2(167, 149)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_1vivr")
+animation = &"Fall"

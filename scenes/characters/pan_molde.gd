@@ -1,28 +1,31 @@
 extends CharacterBody2D
 
 # Variables exportadas (puedes modificarlas desde el Inspector)
-@export var speed: float = 500.0
-@export var jump_velocity: float = -900.0
+@export var speed: float = 300.0
+@export var jump_velocity: float = -1200.0
 
 #Aumented gravity multiplier for a faster play style
-var gravity_multiplier:float=1.3
+@export var gravity_multiplier:float=1.8
 #Jump counter
-var jump_counter_default:int=1
-var jump_counter:int = 1
-var jump_counter_frame:int=1
+@export var jump_counter_default:int=0
+var jump_counter:int = 0
+var jump_counter_frame:int=0
 
 #Inertia acceleration
-@export var character_inertia:float= 20.0
-@export var character_change_jump_direction_inertia:float=100.0
+@export var character_inertia:float= 5.0
+@export var character_change_jump_direction_inertia:float=80.0
 var is_turned:bool=false #Used for changing direction less roughly
 
 #Dash Control
 
 var is_dashing:bool=false
-var dash_speed:float=900
+@export var dash_speed:float=700
 
 #Fast fall
 var fast_fall_multiplier:float=gravity_multiplier * 2
+
+#Sprite control
+var last_direction:float=1.0
 
 func _physics_process(delta: float) -> void:
 	# 1. Aplicar Gravedad cuando está en el aire
@@ -74,15 +77,31 @@ func _physics_process(delta: float) -> void:
 			
 			else:	
 				velocity.x = move_toward(velocity.x,direction * jump_speed,20)
+		last_direction=direction
 	else:
 		is_dashing=false
 		velocity.x = move_toward(velocity.x, 0, character_inertia)
-	jump_counter_frame=jump_counter 
+	jump_counter_frame=jump_counter
+	 
 	
 
 	# 5. Aplicar el movimiento y procesar colisiones
 	move_and_slide()
-
-
-
 	
+	# 6. Sprites
+	
+	$Sprites.flip_h=last_direction==1.0
+	
+	if is_on_floor():
+		if velocity.x==0:
+			$Sprites.play("Idle")
+		else:
+			if is_dashing:
+				$Sprites.play("Run")
+			else:
+				$Sprites.play("Walk")
+	else:
+		if velocity.y<0:
+			$Sprites.play("Jump")
+		else:
+			$Sprites.play("Fall")
