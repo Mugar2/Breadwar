@@ -4,6 +4,10 @@ extends CharacterBody2D
 @export var speed: float = 300.0
 @export var jump_velocity: float = -1200.0
 
+# Health and Death
+@export var life:int=100
+@export var is_dead:bool=false
+
 #Aumented gravity multiplier for a faster play style
 @export var gravity_multiplier:float=1.8
 #Jump counter
@@ -91,7 +95,6 @@ func _physics_process(delta: float) -> void:
 	# 6. Sprites
 	
 	# 6. Sprites
-	
 	$Sprites.flip_h=last_direction==1.0
 	
 	if is_on_floor():
@@ -103,7 +106,8 @@ func _physics_process(delta: float) -> void:
 			else:
 				$Sprites.play("Walk")
 	else:
-		if velocity.y>0:
+		
+		if velocity.y<0:
 			$Sprites.play("Jump")
 		else:
 			$Sprites.play("Fall")

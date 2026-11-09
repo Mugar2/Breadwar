@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://duu2bw1ukiug2" path="res://assets/characters/Pan_semilla/jump_up_semillas.png" id="5_u17vg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6eumy"]
-size = Vector2(191, 126)
+size = Vector2(187.5, 136)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
 resource_local_to_scene = true
@@ -107,11 +107,11 @@ character_change_jump_direction_inertia = 60.0
 dash_speed = 800.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1528017982]
-position = Vector2(364.5, 230)
+position = Vector2(368.25, 186)
 shape = SubResource("RectangleShape2D_6eumy")
 
 [node name="Sprites" type="AnimatedSprite2D" parent="." unique_id=59169380]
-position = Vector2(368, 198)
+position = Vector2(368, 160)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_1vivr")
-animation = &"Fall"
+animation = &"Jump"

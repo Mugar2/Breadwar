@@ -4,6 +4,10 @@ extends CharacterBody2D
 @export var speed: float = 500.0
 @export var jump_velocity: float = -900.0
 
+# Health and Death
+@export var life:int=100
+@export var is_dead:bool=false
+
 #Aumented gravity multiplier for a faster play style
 @export var gravity_multiplier:float=1.3
 #Jump counter
