@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bomfebb4lq3vw"]
 
 [ext_resource type="Script" uid="uid://8qvje0j11at6" path="res://scenes/characters/pan_gordo.gd" id="1_8k84t"]
+[ext_resource type="Texture2D" uid="uid://bqvt6orptle75" path="res://assets/characters/Pan_pueblo/normal_pueblo2.png" id="2_1lc0e"]
 [ext_resource type="Texture2D" uid="uid://can2luf3ru0vd" path="res://assets/characters/Pan_pueblo/idle_pueblo.png" id="2_52f36"]
 [ext_resource type="Texture2D" uid="uid://cam5gul25f6wu" path="res://assets/characters/Pan_pueblo/jump_falling_pueblo.png" id="2_y5xcn"]
 [ext_resource type="Texture2D" uid="uid://bf23smtsrvm0h" path="res://assets/characters/Pan_pueblo/blink_pueblo.png" id="3_tc5oc"]
@@ -8,6 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://bbj5nbefq32gq" path="res://assets/characters/Pan_pueblo/jump_up_pueblo.png" id="5_og7aj"]
 [ext_resource type="Texture2D" uid="uid://0s56l6rht7ja" path="res://assets/characters/Pan_pueblo/walk_pueblo2.png" id="5_yn6ln"]
 [ext_resource type="Texture2D" uid="uid://hrl6g7m85tcn" path="res://assets/characters/Pan_pueblo/walk_pueblo3.png" id="6_1lc0e"]
+[ext_resource type="Script" uid="uid://b8il44atfft1x" path="res://scenes/characters/barra_pan_basic_attack_hitbox.gd" id="9_yn6ln"]
+[ext_resource type="Script" uid="uid://drq8t251xxtur" path="res://scenes/characters/barra_pan_hurtbox.gd" id="10_1lc0e"]
+[ext_resource type="AudioStream" uid="uid://knb6h4wvbwcn" path="res://assets/characters/Pan_pueblo/dash.wav" id="12_kajj0"]
+[ext_resource type="AudioStream" uid="uid://dlturmu7l414m" path="res://assets/characters/jumper.wav" id="13_0qcar"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6eumy"]
 size = Vector2(180, 160)
@@ -15,6 +20,14 @@ size = Vector2(180, 160)
 [sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
 resource_local_to_scene = true
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1lc0e")
+}],
+"loop": 1,
+"name": &"Basic_attack",
+"speed": 3.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_y5xcn")
@@ -92,10 +105,21 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kajj0"]
+size = Vector2(177, 161.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0qcar"]
+size = Vector2(177.25, 159.5)
+
 [node name="Pan_gordo" type="CharacterBody2D" unique_id=1290224343]
 script = ExtResource("1_8k84t")
-jump_velocity = -2500.0
+speed = 250.0
+jump_velocity = -2200.0
+life = 150
+gravity_multiplier = 4.5
+jump_counter_default = 0
 character_inertia = 30.0
+dash_speed = 600.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1528017982]
 position = Vector2(370, 205)
@@ -105,4 +129,48 @@ shape = SubResource("RectangleShape2D_6eumy")
 position = Vector2(368, 198)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_1vivr")
-animation = &"Fall"
+animation = &"Basic_attack"
+frame_progress = 0.79948306
+
+[node name="Basic_attack_timer" type="Timer" parent="." unique_id=815541664]
+process_callback = 0
+wait_time = 0.2
+
+[node name="Basic_attack_hitbox" type="Area2D" parent="." unique_id=26576956]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("9_yn6ln")
+damage = 15
+knockback_x = 2000
+knockback_y = 1000
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Basic_attack_hitbox" unique_id=1996023199]
+position = Vector2(365.5, 182.25)
+shape = SubResource("RectangleShape2D_kajj0")
+disabled = true
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1171117487]
+collision_layer = 0
+collision_mask = 15
+script = ExtResource("10_1lc0e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=97419722]
+position = Vector2(369.375, 203.75)
+shape = SubResource("RectangleShape2D_0qcar")
+
+[node name="Damage_cooldown" type="Timer" parent="Hurtbox" unique_id=896148255]
+
+[node name="Cooldown_attack" type="Timer" parent="." unique_id=1345281217]
+wait_time = 1.25
+
+[node name="Dash" type="AudioStreamPlayer2D" parent="." unique_id=1311625707]
+stream = ExtResource("12_kajj0")
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="." unique_id=1716459554]
+stream = ExtResource("13_0qcar")
+volume_db = -20.0
+
+[connection signal="timeout" from="Basic_attack_timer" to="." method="_on_basic_attack_timer_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="Hurtbox" method="_on_area_entered"]
+[connection signal="timeout" from="Hurtbox/Damage_cooldown" to="." method="_on_damage_cooldown_timeout"]
+[connection signal="timeout" from="Cooldown_attack" to="." method="_on_cooldown_attack_timeout"]

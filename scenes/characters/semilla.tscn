@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://doh51vwfupa81"]
+
+[ext_resource type="Script" uid="uid://cmkx7g33pui45" path="res://scenes/characters/semilla.gd" id="1_ou68a"]
+[ext_resource type="Texture2D" uid="uid://dqu5eahredko0" path="res://assets/characters/Pan_semilla/semilla.png" id="2_hqyh1"]
+[ext_resource type="Script" uid="uid://b8il44atfft1x" path="res://scenes/characters/barra_pan_basic_attack_hitbox.gd" id="2_p4ad4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1vivr"]
+size = Vector2(36, 23)
+
+[node name="Node2D" type="Node2D" unique_id=156577894]
+script = ExtResource("1_ou68a")
+
+[node name="Basic_attack_hitbox" type="Area2D" parent="." unique_id=186918312]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("2_p4ad4")
+damage = 6
+knockback_x = 750
+
+[node name="Sprite2D" type="Sprite2D" parent="Basic_attack_hitbox" unique_id=1435591458]
+position = Vector2(42.75, 30.75)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_hqyh1")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Basic_attack_hitbox" unique_id=339894959]
+position = Vector2(42, 28.5)
+shape = SubResource("RectangleShape2D_1vivr")

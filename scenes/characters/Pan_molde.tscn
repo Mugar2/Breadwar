@@ -3,12 +3,18 @@
 [ext_resource type="Texture2D" uid="uid://bw05h11hhaa64" path="res://assets/characters/Pan_molde/jump_falling_molde.png" id="2_5nswc"]
 [ext_resource type="Texture2D" uid="uid://bu27tfr0mdaah" path="res://assets/characters/Pan_molde/idle_molde.png" id="2_oopd2"]
 [ext_resource type="Script" uid="uid://ck2xfw3mgdgje" path="res://scenes/characters/pan_molde.gd" id="2_y4y4w"]
+[ext_resource type="Texture2D" uid="uid://becmkmng2pstt" path="res://assets/characters/Pan_molde/normal_molde2.png" id="3_lnfe0"]
 [ext_resource type="Texture2D" uid="uid://d0wjrbp7ojpip" path="res://assets/characters/Pan_molde/blink_molde.png" id="3_y4y4w"]
+[ext_resource type="Texture2D" uid="uid://ch6lm5gtycmuv" path="res://assets/characters/Pan_molde/normal_molde3.png" id="4_512mu"]
 [ext_resource type="Texture2D" uid="uid://cbdey7rpdhib8" path="res://assets/characters/Pan_molde/jump_up_molde.png" id="5_mxm2a"]
 [ext_resource type="Texture2D" uid="uid://dkqsnbn34dfko" path="res://assets/characters/Pan_molde/walk_molde1.png" id="7_lnfe0"]
 [ext_resource type="Texture2D" uid="uid://bb2cmm5vd665l" path="res://assets/characters/Pan_molde/walk_molde2.png" id="8_512mu"]
 [ext_resource type="Texture2D" uid="uid://dm4cljndc1070" path="res://assets/characters/Pan_molde/walk_molde3.png" id="9_n8ud1"]
 [ext_resource type="Texture2D" uid="uid://doiuhhf7ahjjx" path="res://assets/characters/Pan_molde/walk_molde4.png" id="10_56s1j"]
+[ext_resource type="Script" uid="uid://b8il44atfft1x" path="res://scenes/characters/barra_pan_basic_attack_hitbox.gd" id="12_n8ud1"]
+[ext_resource type="Script" uid="uid://drq8t251xxtur" path="res://scenes/characters/barra_pan_hurtbox.gd" id="13_56s1j"]
+[ext_resource type="AudioStream" uid="uid://bx0mk7llxcglk" path="res://assets/characters/Pan_molde/duck.wav" id="14_56s1j"]
+[ext_resource type="AudioStream" uid="uid://dlturmu7l414m" path="res://assets/characters/jumper.wav" id="15_ncau5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6eumy"]
 size = Vector2(89, 119)
@@ -16,6 +22,20 @@ size = Vector2(89, 119)
 [sub_resource type="SpriteFrames" id="SpriteFrames_1vivr"]
 resource_local_to_scene = true
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_lnfe0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_lnfe0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_512mu")
+}],
+"loop": 1,
+"name": &"Basic_attack",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_5nswc")
@@ -99,12 +119,19 @@ animations = [{
 "speed": 25.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ncau5"]
+size = Vector2(67, 110.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_asbxv"]
+size = Vector2(75, 114.5)
+
 [node name="Pan_molde" type="CharacterBody2D" unique_id=1290224343]
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("2_y4y4w")
 speed = 1000.0
 jump_velocity = -400.0
+life = 80
 gravity_multiplier = 1.2
 jump_counter_default = 3
 character_inertia = 30.0
@@ -119,4 +146,45 @@ shape = SubResource("RectangleShape2D_6eumy")
 position = Vector2(404, 178)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_1vivr")
-animation = &"Fall"
+animation = &"Basic_attack"
+frame_progress = 0.014069982
+
+[node name="Basic_attack_timer" type="Timer" parent="." unique_id=572709307]
+process_callback = 0
+wait_time = 0.3
+
+[node name="Basic_attack_hitbox" type="Area2D" parent="." unique_id=1828518722]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("12_n8ud1")
+damage = 5
+knockback_x = 500
+knockback_y = 500
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Basic_attack_hitbox" unique_id=841987847]
+position = Vector2(371.5, 181.25)
+shape = SubResource("RectangleShape2D_ncau5")
+disabled = true
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1569145187]
+collision_layer = 0
+collision_mask = 15
+script = ExtResource("13_56s1j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=261262348]
+position = Vector2(406.5, 181.25)
+shape = SubResource("RectangleShape2D_asbxv")
+
+[node name="Damage_cooldown" type="Timer" parent="Hurtbox" unique_id=1916052208]
+
+[node name="Duck" type="AudioStreamPlayer2D" parent="." unique_id=1349763347]
+stream = ExtResource("14_56s1j")
+volume_db = 0.5
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="." unique_id=1333687582]
+stream = ExtResource("15_ncau5")
+volume_db = -20.0
+
+[connection signal="timeout" from="Basic_attack_timer" to="." method="_on_basic_attack_timer_timeout"]
+[connection signal="area_entered" from="Hurtbox" to="Hurtbox" method="_on_area_entered"]
+[connection signal="timeout" from="Hurtbox/Damage_cooldown" to="." method="_on_damage_cooldown_timeout"]
